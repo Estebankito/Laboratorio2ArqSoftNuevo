@@ -42,14 +42,14 @@ public class ClienteServlet extends HttpServlet {
         String apellidos = "";
         String correo = "";
         String accion = "";
-        int telefono = 0;
-        int identificacion = 0;
+        String telefono ="";
+        String identificacion="" ;
 
         accion = request.getParameter("accion");
                 
         texto = request.getParameter("identificacion");
         if (Validacion.validarNumero(texto) == true) {
-            identificacion = Integer.parseInt(texto);
+            identificacion = texto;
         }
 
         texto = request.getParameter("nombres");
@@ -66,7 +66,7 @@ public class ClienteServlet extends HttpServlet {
 
         texto = request.getParameter("telefono");
         if (Validacion.validarNumero(texto) == true) {
-            telefono = Integer.parseInt(texto);
+            telefono = texto;
         }
 
         Cliente cliente = new Cliente(identificacion, nombres, apellidos, correo, telefono);
@@ -93,7 +93,10 @@ public class ClienteServlet extends HttpServlet {
             clienteDao.deleteCliente(identificacion);
         } else if ("Buscar".equalsIgnoreCase(accion)) {
             cliente = clienteDao.getCliente(identificacion);
+        } else {
+            //mostrar todo
         }
+        
 
         request.setAttribute("cliente", cliente);
         request.setAttribute("AllClientes", clienteDao.getAllClientes());

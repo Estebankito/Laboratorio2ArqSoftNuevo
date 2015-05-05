@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Blob;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -45,9 +46,9 @@ public class VehiculoServlet extends HttpServlet {
         String matricula;
         String accion;
         String color = "";
-        int cantidad = 0;
-        int modelo = 0;
-        Double precio = 0.0;
+        String cantidad = "";
+        String modelo = "";
+        String precio = "";
         InputStream inputStream = null;
         
         //Capturamos los valores de los campos en la vista
@@ -58,7 +59,7 @@ public class VehiculoServlet extends HttpServlet {
 
         texto = request.getParameter("modelo");
         if (Validacion.validarNumero(texto)) {
-            modelo = Integer.parseInt(texto);
+            modelo = texto;
         }
 
         texto = request.getParameter("color");
@@ -68,12 +69,13 @@ public class VehiculoServlet extends HttpServlet {
         
         texto = request.getParameter("cantidad");
         if (Validacion.validarNumero(texto)) {
-            cantidad = Integer.parseInt(texto);
+            cantidad = texto;
         }
         
         texto = request.getParameter("precio");
         if (Validacion.validarPrecio(texto)) {
-            precio = Double.parseDouble(texto);
+           // precio = Double.parseDouble(texto);
+            precio = texto;
         }
        
 
@@ -95,7 +97,21 @@ public class VehiculoServlet extends HttpServlet {
            
         
         if ("Agregar".equalsIgnoreCase(accion)) {
-            vehiculoDao.addVehiculo(vehiculo);
+            boolean ok=true;
+            List l = vehiculoDao.getAllVehiculos();
+            for(int i=0;i<l.size();i++){
+                Vehiculo v=(Vehiculo)l.get(i);
+                if(v.getMatricula().equals(matricula)){
+                    ok=false;
+                }
+            }
+            if(ok){
+                vehiculoDao.addVehiculo(vehiculo);
+            }
+            else{
+                //Mensaje de alerta----intento fallido de duplicación de primary key
+            }
+            
         }else if ("Editar".equalsIgnoreCase(accion)) {
             vehiculoDao.editVehiculo(vehiculo);
         }else if ("Eliminar".equalsIgnoreCase(accion)) {

@@ -9,6 +9,7 @@ import com.udea.dao.VentaDaoLocal;
 import com.udea.model.Venta;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -39,42 +40,65 @@ public class VentaServlet extends HttpServlet {
         String accion;
         String texto;
         String nroFactura="";
-        int idCliente=0;
+        String idCliente="";
         String idVehiculo="";
-        int cantidad=0;
-        Double precioTotal=0.0;
+        String cantidad="";
+        String precioTotal="";
         
         accion = request.getParameter("accion");
         
         texto = request.getParameter("nroFactura");
-        if (Validacion.validarString(texto) == true) {
+        if (texto != null && !texto.equals("")) {
             nroFactura = texto;            
         }
         
         texto = request.getParameter("idCliente");
         if (Validacion.validarNumero(texto) == true) {
-            idCliente = Integer.parseInt(texto);            
+           // idCliente = Integer.parseInt(texto);    
+            idCliente = texto; 
         }
         
         texto = request.getParameter("idVehiculo");
-        if (Validacion.validarString(texto)) {
+        if (texto != null && !texto.equals("")) {
             idVehiculo = texto;            
         }
         
         texto = request.getParameter("cantidad");
         if (Validacion.validarNumero(texto)) {
-            cantidad = Integer.parseInt(texto);            
+            //cantidad = Integer.parseInt(texto);   
+            cantidad = texto;
         }
         
         texto = request.getParameter("precioTotal");
         if (Validacion.validarPrecio(texto)) {
-            precioTotal = Double.parseDouble(texto);            
+            //precioTotal = Double.parseDouble(texto);     
+            precioTotal = texto; 
         }
         
         Venta venta = new Venta(nroFactura, idCliente, idVehiculo, cantidad, precioTotal);
         
+        
+            
+            
+            
+                
+            
+        
         if ("Agregar".equalsIgnoreCase(accion)) {
+            boolean ok=true;
+            List l = ventaDao.getAllVentas();            
+            for(int i=0;i< l.size();i++){
+                Venta temporal= (Venta)l.get(i);
+                if(temporal.getNroFactura().equals(nroFactura)){
+                    ok=false;
+                }
+            }          
+            if(ok){
             ventaDao.addVenta(venta);
+            }
+            else{
+                //Falta enviar mensaje que el id ya existe 
+            }
         }else if ("Editar".equalsIgnoreCase(accion)) {
             ventaDao.editVenta(venta);            
         }else if ("Eliminar".equalsIgnoreCase(accion)) {

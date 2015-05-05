@@ -25,7 +25,7 @@ public class Cliente {
  @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private int identificacion;
+    private String identificacion;
     @Column
     private String nombres;
     @Column
@@ -33,12 +33,12 @@ public class Cliente {
     @Column
     private String correo;
     @Column
-    private int telefono;
+    private String telefono;
 
     public Cliente() {
     }    
     
-    public Cliente(int identificacion, String nombres, String apellidos, String correo, int telefono) {
+    public Cliente(String identificacion, String nombres, String apellidos, String correo, String telefono) {
         this.identificacion = identificacion;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -46,11 +46,11 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public int getIdentificacion() {
+    public String getIdentificacion() {
         return identificacion;
     }
 
-    public void setIdentificacion(int identificacion) {
+    public void setIdentificacion(String identificacion) {
         this.identificacion = identificacion;
     }
 
@@ -78,11 +78,11 @@ public class Cliente {
         this.correo = correo;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }   
 }

@@ -20,9 +20,9 @@ public interface ClienteDaoLocal {
 
     void editCliente(Cliente cliente);
 
-    void deleteCliente(int idCliente);
+    void deleteCliente(String idCliente);
 
-    Cliente getCliente(int idCliente);
+    Cliente getCliente(String idCliente);
 
     List<Cliente> getAllClientes();
     

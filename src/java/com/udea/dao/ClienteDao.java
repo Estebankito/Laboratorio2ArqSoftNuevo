@@ -31,12 +31,12 @@ public class ClienteDao implements ClienteDaoLocal {
     }
 
     @Override
-    public void deleteCliente(int idCliente) {
+    public void deleteCliente(String idCliente) {
         em.remove(getCliente(idCliente));
     }
 
     @Override
-    public Cliente getCliente(int idCliente) {
+    public Cliente getCliente(String idCliente) {
         return em.find(Cliente.class, idCliente);
     }
 

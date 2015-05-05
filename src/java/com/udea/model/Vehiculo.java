@@ -28,20 +28,20 @@ public class Vehiculo {
 @Column
 private String matricula;
 @Column
-private int modelo;
+private String modelo;
 @Column
 private String color;
 @Column
-private int cantidad;
+private String cantidad;
 @Column
-private Double precio;
+private String precio;
 @Column
 private Blob foto;
 
     public Vehiculo() {
     }   
 
-    public Vehiculo(String matricula, int modelo, String color, int cantidad, Double precio, Blob foto) {
+    public Vehiculo(String matricula, String modelo, String color, String cantidad, String precio, Blob foto) {
         this.matricula = matricula;
         this.modelo = modelo;
         this.color = color;
@@ -58,11 +58,11 @@ private Blob foto;
         this.matricula = matricula;
     }
 
-    public int getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(int modelo) {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
@@ -74,19 +74,19 @@ private Blob foto;
         this.color = color;
     }
 
-    public int getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Double getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 

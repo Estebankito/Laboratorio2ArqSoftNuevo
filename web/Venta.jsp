@@ -27,9 +27,18 @@
         <div align="center" style= "margin-left: 15%  ;margin-right:  15%  ;margin-top: 5%  ;">
             <div class="contenedor1">
                 <div style="margin-top: 50%;">
-                    <a href="Cliente.jsp">Cliente</a><br><br>
-                    <a href="Vehiculo.jsp">Vehículo</a><br><br>
-                    <a href="Venta.jsp">Venta</a><br>
+                    <br>
+                    <form action="./ClienteServlet" method="POST">
+                        <input type="submit" name="accion" value="Cliente"/>
+                    </form>
+                    <!--<a href="Cliente.jsp">Cliente</a><br><br>--><br>
+                    <form action="./VehiculoServlet" method="POST">
+                        <input type="submit" name="accion" value="Vehiculo"/>
+                    </form>
+                    <!--<a href="Vehiculo.jsp">Vehículo</a><br><br>--><br>
+                    <form action="./VentaServlet" method="POST">
+                        <input type="submit" name="accion" value="Venta"/>
+                    </form>
                 </div>
 
             </div>
@@ -44,11 +53,11 @@
                         </tr>
                         <tr>
                             <th><h2>#Cliente</h2></th>
-                            <th> <input type="text" name="idCliente" value="${venta.idCliente}"/></th>
+                            <th> <input type="text" name="idCliente" value="${venta.cliente}"/></th>
                         </tr>
                         <tr>
                             <th><h2>#Vehiculo</h2></th>
-                            <th><input type="text" name="idVehiculo" value="${venta.idVehiculo}"/> </th>
+                            <th><input type="text" name="idVehiculo" value="${venta.vehiculo}"/> </th>
                         </tr>
                         <tr>
                             <th><h2>Cantidad</h2></th>
@@ -81,8 +90,8 @@
                     <c:forEach items="${AllVentas}" var="vent">
                         <tr>
                             <td>${vent.nroFactura}</td>
-                            <td>${vent.idCliente}</td>
-                            <td>${vent.idVehiculo}</td>
+                            <td>${vent.cliente}</td>
+                            <td>${vent.vehiculo}</td>
                             <td>${vent.cantidad}</td>
                             <td>${vent.precioTotal}</td>
                         </tr>

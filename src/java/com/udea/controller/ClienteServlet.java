@@ -72,7 +72,21 @@ public class ClienteServlet extends HttpServlet {
         Cliente cliente = new Cliente(identificacion, nombres, apellidos, correo, telefono);
 
         if ("Agregar".equalsIgnoreCase(accion)) {
-            clienteDao.addCliente(cliente);
+            boolean ok=true;
+            List l = clienteDao.getAllClientes();
+            for(int i=0;i< l.size();i++){
+                Cliente temporal= (Cliente)l.get(i);
+                if(temporal.getIdentificacion()==identificacion){
+                    ok=false;
+                }
+            }
+            if(ok){
+                clienteDao.addCliente(cliente);
+            }
+            else{
+                //Falta enviar mensaje que el id ya existe 
+            }
+            
         } else if ("Editar".equalsIgnoreCase(accion)) {
             clienteDao.editCliente(cliente);
         } else if ("Eliminar".equalsIgnoreCase(accion)) {

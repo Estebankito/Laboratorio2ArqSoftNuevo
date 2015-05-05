@@ -24,8 +24,6 @@ public interface VentaDaoLocal {
 
     Venta getVenta(String idVenta);
 
-    List<Venta> getAllStudents();
-
     List<Venta> getAllVentas();
     
 }

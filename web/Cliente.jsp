@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -59,7 +60,7 @@
                         <th><br></th>
                         <tr>
                             <td colspan="2">
-                                <input type="submit" name="accion" value="Añadir"/>
+                                <input type="submit" name="accion" value="Agregar"/>
                                 <input type="submit" name="accion" value="Editar"/>
                                 <input type="submit" name="accion" value="Eliminar"/>
                                 <input type="submit" name="accion" value="Buscar"/>

@@ -8,6 +8,7 @@ package com.udea.controller;
 import com.udea.dao.ClienteDaoLocal;
 import com.udea.model.Cliente;
 import java.io.IOException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,13 +40,13 @@ public class ClienteServlet extends HttpServlet {
         String texto;
         String nombres = "";
         String apellidos = "";
-        String correo;
-        String accion;
+        String correo = "";
+        String accion = "";
         int telefono = 0;
         int identificacion = 0;
 
         accion = request.getParameter("accion");
-
+                
         texto = request.getParameter("identificacion");
         if (Validacion.validarNumero(texto) == true) {
             identificacion = Integer.parseInt(texto);
@@ -70,14 +71,14 @@ public class ClienteServlet extends HttpServlet {
 
         Cliente cliente = new Cliente(identificacion, nombres, apellidos, correo, telefono);
 
-        if ("Añadir".equalsIgnoreCase(accion)) {
+        if ("Agregar".equalsIgnoreCase(accion)) {
             clienteDao.addCliente(cliente);
         } else if ("Editar".equalsIgnoreCase(accion)) {
             clienteDao.editCliente(cliente);
         } else if ("Eliminar".equalsIgnoreCase(accion)) {
             clienteDao.deleteCliente(identificacion);
         } else if ("Buscar".equalsIgnoreCase(accion)) {
-            clienteDao.getCliente(identificacion);
+            cliente = clienteDao.getCliente(identificacion);
         }
 
         request.setAttribute("cliente", cliente);

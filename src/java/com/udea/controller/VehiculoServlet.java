@@ -94,14 +94,14 @@ public class VehiculoServlet extends HttpServlet {
             Vehiculo vehiculo = new Vehiculo(matricula, modelo, color, cantidad, precio, (Blob) inputStream);
            
         
-        if ("Añadir".equalsIgnoreCase(accion)) {
+        if ("Agregar".equalsIgnoreCase(accion)) {
             vehiculoDao.addVehiculo(vehiculo);
         }else if ("Editar".equalsIgnoreCase(accion)) {
             vehiculoDao.editVehiculo(vehiculo);
         }else if ("Eliminar".equalsIgnoreCase(accion)) {
             vehiculoDao.deleteVehiculo(matricula);
         }else if ("Buscar".equalsIgnoreCase(accion)) {
-            vehiculoDao.getVehiculo(matricula);
+            vehiculo = vehiculoDao.getVehiculo(matricula);
         }
         
         request.setAttribute("vehiculo", vehiculo);

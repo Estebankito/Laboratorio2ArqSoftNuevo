@@ -73,14 +73,14 @@ public class VentaServlet extends HttpServlet {
         
         Venta venta = new Venta(nroFactura, idCliente, idVehiculo, cantidad, precioTotal);
         
-        if ("Añadir".equalsIgnoreCase(accion)) {
+        if ("Agregar".equalsIgnoreCase(accion)) {
             ventaDao.addVenta(venta);
         }else if ("Editar".equalsIgnoreCase(accion)) {
             ventaDao.editVenta(venta);            
         }else if ("Eliminar".equalsIgnoreCase(accion)) {
             ventaDao.deleteVenta(nroFactura);            
         }else if ("Buscar".equalsIgnoreCase(accion)) {
-            ventaDao.getVenta(nroFactura);
+            venta = ventaDao.getVenta(nroFactura);
         }
         
         request.setAttribute("venta", venta);

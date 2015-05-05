@@ -27,9 +27,9 @@ public class Venta {
     @Column
     private String nroFactura;
     @Column
-    private int idCliente;
+    private int cliente;
     @Column
-    private String idVehiculo;
+    private String vehiculo;
     @Column
     private int cantidad;
     @Column
@@ -40,8 +40,8 @@ public class Venta {
 
     public Venta(String nroFactura, int idCliente, String idVehiculo, int cantidad, Double precioTotal) {
         this.nroFactura = nroFactura;
-        this.idCliente = idCliente;
-        this.idVehiculo = idVehiculo;
+        this.cliente = idCliente;
+        this.vehiculo = idVehiculo;
         this.cantidad = cantidad;
         this.precioTotal = precioTotal;
     }
@@ -54,20 +54,20 @@ public class Venta {
         this.nroFactura = nroFactura;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public int getCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(int idCliente) {
+        this.cliente = idCliente;
     }
 
-    public String getIdVehiculo() {
-        return idVehiculo;
+    public String getVehiculo() {
+        return vehiculo;
     }
 
-    public void setIdVehiculo(String idVehiculo) {
-        this.idVehiculo = idVehiculo;
+    public void setVehiculo(String vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
     public int getCantidad() {

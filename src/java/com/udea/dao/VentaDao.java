@@ -49,10 +49,7 @@ public class VentaDao implements VentaDaoLocal {
         em.persist(object);
     }
 
-    @Override
-    public List<Venta> getAllStudents() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
 
     
       

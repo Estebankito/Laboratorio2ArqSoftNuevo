@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>ClienteServlet</servlet-name>
+        <servlet-class>com.udea.controller.ClienteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VehiculoServlet</servlet-name>
+        <servlet-class>com.udea.controller.VehiculoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VentaServlet</servlet-name>
+        <servlet-class>com.udea.controller.VentaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClienteServlet</servlet-name>
+        <url-pattern>/ClienteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehiculoServlet</servlet-name>
+        <url-pattern>/VehiculoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VentaServlet</servlet-name>
+        <url-pattern>/VentaServlet</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <resource-ref>
+        <res-ref-name>jdbc/concesionarioBD</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
+</web-app>

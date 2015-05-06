@@ -95,6 +95,7 @@ public class VentaServlet extends HttpServlet {
             }          
             if(ok){
             ventaDao.addVenta(venta);
+            venta = new Venta();
             }
             else{
                 //Falta enviar mensaje que el id ya existe 

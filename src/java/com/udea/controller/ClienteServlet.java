@@ -82,6 +82,7 @@ public class ClienteServlet extends HttpServlet {
             }
             if(ok){
                 clienteDao.addCliente(cliente);
+                cliente = new Cliente();
             }
             else{
                 //Falta enviar mensaje que el id ya existe 

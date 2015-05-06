@@ -11,7 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Blob;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -39,17 +43,20 @@ public class VehiculoServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         String texto;
         String matricula;
         String accion;
         String color = "";
         String cantidad = "";
         String modelo = "";
-        String precio = "";
+        String precio = "";        
+        Part filePart;
         InputStream inputStream = null;
+        byte[] foto = null;
         
         //Capturamos los valores de los campos en la vista
         
@@ -78,9 +85,8 @@ public class VehiculoServlet extends HttpServlet {
             precio = texto;
         }
        
-
-        // Obtenemos el archivo en partes a través de una petición Multipart
-        /*Part filePart = request.getPart("foto");
+        
+        filePart = request.getPart("foto");
 
         if (filePart != null) {
 
@@ -91,9 +97,12 @@ public class VehiculoServlet extends HttpServlet {
 
             // Obtener el InputStream del Archivo Subido
             inputStream = filePart.getInputStream();
+            foto = new byte[(int) filePart.getSize()];
+            inputStream.read(foto);
+            inputStream.close();
         
-        }    */
-            Vehiculo vehiculo = new Vehiculo(matricula, modelo, color, cantidad, precio, (Blob) inputStream);
+        }  
+            Vehiculo vehiculo = new Vehiculo(matricula, modelo, color, cantidad, precio, foto);
            
         
         if ("Agregar".equalsIgnoreCase(accion)) {
@@ -107,6 +116,7 @@ public class VehiculoServlet extends HttpServlet {
             }
             if(ok){
                 vehiculoDao.addVehiculo(vehiculo);
+                vehiculo = new Vehiculo();
             }
             else{
                 //Mensaje de alerta----intento fallido de duplicación de primary key
@@ -139,7 +149,11 @@ public class VehiculoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(VehiculoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -153,7 +167,11 @@ public class VehiculoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(VehiculoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

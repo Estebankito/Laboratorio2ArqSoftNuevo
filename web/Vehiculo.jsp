@@ -31,10 +31,10 @@
                         <input type="submit" name="accion" value="Cliente"/>
                     </form>
                     <!--<a href="Cliente.jsp">Cliente</a><br><br>--><br>
-                    <form action="./VehiculoServlet" method="POST">
+                    <!--<form action="./VehiculoServlet" method="POST">
                         <input type="submit" name="accion" value="Vehiculo"/>
-                    </form>
-                    <!--<a href="Vehiculo.jsp">Vehículo</a><br><br>--><br>
+                    </form>-->
+                    <a href="Vehiculo.jsp">Vehículo</a><br><br><br>
                     <form action="./VentaServlet" method="POST">
                         <input type="submit" name="accion" value="Venta"/>
                     </form>
@@ -43,9 +43,14 @@
             </div>
             <div class="contenedor2alterno">
                 <h1>Vehículo</h1>
-                <form action="./VehiculoServlet" method="POST">
+                <form action="./VehiculoServlet" method="POST" enctype="multipart/form-data">
                      <table>
                          <!--Pendiente añadir imagen redimensionada-->
+                         <tr>
+                             <th><h2>Foto:</h2></th>
+
+                        <td><br><img src="ImagenServlet?vehiculo=${vehiculo.matricula}" alt="IMAGEN"/></td>
+                        </tr> 
                         <tr>
                             <th><h2>Matricula</h2></th>
                             <th><input type="text" name="matricula" value="${vehiculo.matricula}"/> </th>
@@ -66,6 +71,12 @@
                             <th><h2>Precio</h2></th>
                             <th><input type="text" name="precio" value="${vehiculo.precio}"/> </th>
                         </tr>
+                        <tr>
+                        <th><h2>Foto:</h2></th>
+
+                        <td><input type="file" name="foto" size="10"/></td>
+                        </tr>
+                        <tr>
                         <th><br></th>
                         <tr>
                             <td colspan="2">

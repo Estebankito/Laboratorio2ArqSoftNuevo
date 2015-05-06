@@ -5,8 +5,17 @@
  */
 package com.udea.controller;
 
+import com.udea.dao.VehiculoDaoLocal;
+import com.udea.model.Vehiculo;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author jorgel.diaz <jlditru@gmail.com>
  */
 public class ImagenServlet extends HttpServlet {
+
+    @EJB
+    private VehiculoDaoLocal vehiculoDao;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,6 +42,22 @@ public class ImagenServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        Vehiculo vehiculo = null;
+        Blob fotoVehiculo = null;
+        byte[] buffer = null;
+        OutputStream os = null;
+
+        String matricula = request.getParameter("vehiculo");
+
+        vehiculo = vehiculoDao.getVehiculo(matricula);
+        if (vehiculo != null) {
+            buffer =  vehiculo.getFoto();
+        }
+        response.setContentType("image/png");
+        os = response.getOutputStream();
+        os.write(buffer);
+        os.flush();
+        os.close();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

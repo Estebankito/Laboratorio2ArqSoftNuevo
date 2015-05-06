@@ -5,6 +5,7 @@
  */
 package com.udea.model;
 
+import java.io.InputStream;
 import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,12 +37,12 @@ private String cantidad;
 @Column
 private String precio;
 @Column
-private Blob foto;
+private byte[] foto;
 
     public Vehiculo() {
     }   
 
-    public Vehiculo(String matricula, String modelo, String color, String cantidad, String precio, Blob foto) {
+    public Vehiculo(String matricula, String modelo, String color, String cantidad, String precio, byte[] foto) {
         this.matricula = matricula;
         this.modelo = modelo;
         this.color = color;
@@ -90,11 +91,11 @@ private Blob foto;
         this.precio = precio;
     }
 
-    public Blob getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(Blob foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }    
 }

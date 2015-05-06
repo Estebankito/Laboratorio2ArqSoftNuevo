@@ -73,10 +73,10 @@ public class ClienteServlet extends HttpServlet {
 
         if ("Agregar".equalsIgnoreCase(accion)) {
             boolean ok=true;
-            List l = clienteDao.getAllClientes();
-            for(int i=0;i< l.size();i++){
-                Cliente temporal= (Cliente)l.get(i);
-                if(temporal.getIdentificacion()==identificacion){
+            List lista = clienteDao.getAllClientes();
+            for(int i=0;i < lista.size();i++){
+                Cliente temporal= (Cliente)lista.get(i);
+                if(temporal.getIdentificacion().equals(identificacion)){
                     ok=false;
                 }
             }

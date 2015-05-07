@@ -17,9 +17,10 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class VentaDao implements VentaDaoLocal {
+
     @PersistenceContext(unitName = "Laboratorio2ArqSoftPU")
     private EntityManager em;
-    
+
     @Override
     public void addVenta(Venta venta) {
         em.persist(venta);
@@ -39,18 +40,14 @@ public class VentaDao implements VentaDaoLocal {
     public Venta getVenta(String idVenta) {
         return em.find(Venta.class, idVenta);
     }
-    
+
     @Override
     public List<Venta> getAllVentas() {
         return em.createNamedQuery("Venta.getAll").getResultList();
     }
-    
+
     public void persist(Object object) {
         em.persist(object);
     }
 
- 
-
-    
-      
 }

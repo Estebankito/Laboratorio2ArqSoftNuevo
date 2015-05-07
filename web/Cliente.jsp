@@ -31,11 +31,11 @@
                     <form action="./ClienteServlet" method="POST">
                         <input type="submit" name="accion" value="Cliente"/>
                     </form>
-                    <!--<a href="Cliente.jsp">Cliente</a><br><br>--><br>
-                    <form action="./VehiculoServlet" method="POST">
+                    <br>
+                    <form action="./VehiculoServlet" method="POST" enctype="multipart/form-data">
                         <input type="submit" name="accion" value="Vehiculo"/>
                     </form>
-                    <!--<a href="Vehiculo.jsp">Vehículo</a><br><br>--><br>
+                    <br>
                     <form action="./VentaServlet" method="POST">
                         <input type="submit" name="accion" value="Venta"/>
                     </form>
@@ -45,26 +45,26 @@
             <div class="contenedor2alterno">
                 <h1>Cliente</h1>
                 <form action="./ClienteServlet" method="POST">
-                     <table>
+                    <table>
                         <tr>
                             <th><h2>Identificación</h2></th>
-                            <th><input type="text" name="identificacion" value="${cliente.identificacion}"/> </th>
+                        <th><input type="text" name="identificacion" value="${cliente.identificacion}"/> </th>
                         </tr>
                         <tr>
                             <th><h2>Nombres</h2></th>
-                            <th> <input type="text" name="nombres" value="${cliente.nombres}"/></th>
+                        <th> <input type="text" name="nombres" value="${cliente.nombres}"/></th>
                         </tr>
                         <tr>
                             <th> <h2>Apellidos</h2></th>
-                            <th><input type="text" name="apellidos" value="${cliente.apellidos}"/> </th>
+                        <th><input type="text" name="apellidos" value="${cliente.apellidos}"/> </th>
                         </tr>
                         <tr>
                             <th><h2>Correo</h2></th>
-                            <th> <input type="text" name="correo" value="${cliente.correo}"/></th>
+                        <th> <input type="text" name="correo" value="${cliente.correo}"/></th>
                         </tr>
                         <tr>
                             <th><h2>Teléfono</h2></th>
-                            <th><input type="text" name="telefono" value="${cliente.telefono}"/> </th>
+                        <th><input type="text" name="telefono" value="${cliente.telefono}"/> </th>
                         </tr>
                         <th><br></th>
                         <tr>
@@ -75,7 +75,7 @@
                                 <input type="submit" name="accion" value="Buscar"/>
                             </td>
                         </tr>
-                     </table>
+                    </table>
                 </form>
                 <br>
                 <br>
@@ -85,7 +85,7 @@
                     <th>Apellidos</th>
                     <th>Correo</th>
                     <th>Teléfono</th>
-                
+
                     <c:forEach items="${AllClientes}" var="clien">
                         <tr>
                             <td>${clien.identificacion}</td>

@@ -17,9 +17,10 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ClienteDao implements ClienteDaoLocal {
+
     @PersistenceContext(unitName = "Laboratorio2ArqSoftPU")
     private EntityManager em;
-    
+
     @Override
     public void addCliente(Cliente cliente) {
         em.persist(cliente);
@@ -48,10 +49,5 @@ public class ClienteDao implements ClienteDaoLocal {
     public void persist(Object object) {
         em.persist(object);
     }
-    
-    
-    
-    
 
-    
 }

@@ -8,13 +8,7 @@ package com.udea.controller;
 import com.udea.dao.VehiculoDaoLocal;
 import com.udea.model.Vehiculo;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,19 +37,18 @@ public class ImagenServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         Vehiculo vehiculo = null;
-        Blob fotoVehiculo = null;
-        byte[] buffer = null;
+        byte[] fotoVehiculo = null;
         OutputStream os = null;
 
         String matricula = request.getParameter("vehiculo");
 
         vehiculo = vehiculoDao.getVehiculo(matricula);
         if (vehiculo != null) {
-            buffer =  vehiculo.getFoto();
+            fotoVehiculo = vehiculo.getFoto();
         }
         response.setContentType("image/png");
         os = response.getOutputStream();
-        os.write(buffer);
+        os.write(fotoVehiculo);
         os.flush();
         os.close();
     }

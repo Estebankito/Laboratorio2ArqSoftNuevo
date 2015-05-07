@@ -7,7 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<htm<head>
+<html>
+    <head>
         <title>Lab 2</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,11 +31,11 @@
                     <form action="./ClienteServlet" method="POST">
                         <input type="submit" name="accion" value="Cliente"/>
                     </form>
-                    <!--<a href="Cliente.jsp">Cliente</a><br><br>--><br>
-                    <!--<form action="./VehiculoServlet" method="POST">
+                    <br>
+                    <form action="./VehiculoServlet" method="POST" enctype="multipart/form-data">
                         <input type="submit" name="accion" value="Vehiculo"/>
-                    </form>-->
-                    <a href="Vehiculo.jsp">Vehículo</a><br><br><br>
+                    </form>
+                    <br>
                     <form action="./VentaServlet" method="POST">
                         <input type="submit" name="accion" value="Venta"/>
                     </form>
@@ -44,40 +45,39 @@
             <div class="contenedor2alterno">
                 <h1>Vehículo</h1>
                 <form action="./VehiculoServlet" method="POST" enctype="multipart/form-data">
-                     <table>
-                         <!--Pendiente añadir imagen redimensionada-->
-                         <tr>
-                             <th><h2>Foto:</h2></th>
+                    <table>                         
+                        <tr>
+                            <th><h2>Foto:</h2></th>
 
-                        <td><br><img src="ImagenServlet?vehiculo=${vehiculo.matricula}" alt="IMAGEN"/></td>
+                        <td><br><center><img src="ImagenServlet?vehiculo=${vehiculo.matricula}" alt="IMAGEN"/></center></td>
                         </tr> 
                         <tr>
                             <th><h2>Matricula</h2></th>
-                            <th><input type="text" name="matricula" value="${vehiculo.matricula}"/> </th>
+                        <th><input type="text" name="matricula" value="${vehiculo.matricula}"/> </th>
                         </tr>
                         <tr>
                             <th><h2>Modelo</h2></th>
-                            <th> <input type="text" name="modelo" value="${vehiculo.modelo}"/></th>
+                        <th> <input type="text" name="modelo" value="${vehiculo.modelo}"/></th>
                         </tr>
                         <tr>
                             <th><h2>Color</h2></th>
-                            <th><input type="text" name="color" value="${vehiculo.color}"/> </th>
+                        <th><input type="text" name="color" value="${vehiculo.color}"/> </th>
                         </tr>
                         <tr>
                             <th><h2>Cantidad</h2></th>
-                            <th> <input type="text" name="cantidad" value="${vehiculo.cantidad}"/></th>
+                        <th> <input type="text" name="cantidad" value="${vehiculo.cantidad}"/></th>
                         </tr>
                         <tr>
                             <th><h2>Precio</h2></th>
-                            <th><input type="text" name="precio" value="${vehiculo.precio}"/> </th>
+                        <th><input type="text" name="precio" value="${vehiculo.precio}"/> </th>
                         </tr>
                         <tr>
-                        <th><h2>Foto:</h2></th>
+                            <th><h2>Foto:</h2></th>
 
-                        <td><input type="file" name="foto" size="10"/></td>
+                        <td><center>  <input type="file" name="foto" size="4" align="center"/></center></td>
                         </tr>
                         <tr>
-                        <th><br></th>
+                            <th><br></th>
                         <tr>
                             <td colspan="2">
                                 <input type="submit" name="accion" value="Agregar"/>
@@ -86,7 +86,7 @@
                                 <input type="submit" name="accion" value="Buscar"/>
                             </td>
                         </tr>
-                     </table>
+                    </table>
                 </form>
                 <br>
                 <br>
@@ -96,7 +96,7 @@
                     <th>Color</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
-                
+
                     <c:forEach items="${AllVehiculos}" var="vehi">
                         <tr>
                             <td>${vehi.matricula}</td>

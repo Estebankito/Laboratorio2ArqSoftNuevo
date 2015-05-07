@@ -20,9 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-@NamedQueries(@NamedQuery(name="Cliente.getAll",query="SELECT c FROM Cliente c"))
+@NamedQueries(
+        @NamedQuery(name = "Cliente.getAll", query = "SELECT c FROM Cliente c"))
 public class Cliente {
- @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
     private String identificacion;
@@ -36,8 +38,8 @@ public class Cliente {
     private String telefono;
 
     public Cliente() {
-    }    
-    
+    }
+
     public Cliente(String identificacion, String nombres, String apellidos, String correo, String telefono) {
         this.identificacion = identificacion;
         this.nombres = nombres;
@@ -84,5 +86,5 @@ public class Cliente {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }   
+    }
 }

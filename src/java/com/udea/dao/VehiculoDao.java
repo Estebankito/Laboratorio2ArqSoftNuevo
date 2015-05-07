@@ -17,9 +17,9 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class VehiculoDao implements VehiculoDaoLocal {
+
     @PersistenceContext(unitName = "Laboratorio2ArqSoftPU")
     private EntityManager em;
-    
 
     @Override
     public void addVehiculo(Vehiculo vehiculo) {
@@ -49,13 +49,5 @@ public class VehiculoDao implements VehiculoDaoLocal {
     public void persist(Object object) {
         em.persist(object);
     }
-    
-    
-    
-    
-    
-    
-    
 
-    
 }

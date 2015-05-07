@@ -42,67 +42,97 @@ public class ClienteServlet extends HttpServlet {
         String apellidos = "";
         String correo = "";
         String accion = "";
-        String telefono ="";
-        String identificacion="" ;
+        String telefono = "";
+        String identificacion = "";
+        String mensaje = "";
 
         accion = request.getParameter("accion");
-                
-        texto = request.getParameter("identificacion");
-        if (Validacion.validarNumero(texto) == true) {
-            identificacion = texto;
+        if (accion.equals("Agregar") || accion.equals("Editar")) {
+
+            texto = request.getParameter("identificacion");
+            if (texto != null && !texto.equals("") && Validacion.validarNumero(texto)) {
+                identificacion = texto;
+            } else {
+                mensaje = "El campo IDENTIFICACIÓN presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+                return;
+            }
+
+            texto = request.getParameter("nombres");
+            if (texto != null && !texto.equals("") && Validacion.validarString(texto)) {
+                nombres = texto;
+            } else {
+                mensaje = "El campo NOMBRES presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+                return;
+            }
+
+            texto = request.getParameter("apellidos");
+            if (texto != null && !texto.equals("") && Validacion.validarString(texto)) {
+                apellidos = texto;
+            } else {
+                mensaje = "El campo APELLIDOS presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+                return;
+            }
+
+            correo = request.getParameter("correo");
+
+            texto = request.getParameter("telefono");
+            if (Validacion.validarNumero(texto)) {
+                telefono = texto;
+            } else {
+                mensaje = "El campo TELEFONO presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+                return;
+            }
         }
-
-        texto = request.getParameter("nombres");
-        if (Validacion.validarString(texto) == true) {
-            nombres = texto;
+        if (accion.equals("Eliminar") || accion.equals("Buscar")) {
+            texto = request.getParameter("identificacion");
+            if (texto != null && !texto.equals("") && Validacion.validarNumero(texto)) {
+                identificacion = texto;
+            } else {
+                mensaje = "El campo IDENTIFICACIÓN presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+                return;
+            }
         }
-
-        texto = request.getParameter("apellidos");
-        if (Validacion.validarString(texto) == true) {
-            apellidos = texto;
-        }
-
-        correo = request.getParameter("correo");
-
-        texto = request.getParameter("telefono");
-        if (Validacion.validarNumero(texto) == true) {
-            telefono = texto;
-        }
-
         Cliente cliente = new Cliente(identificacion, nombres, apellidos, correo, telefono);
 
         if ("Agregar".equalsIgnoreCase(accion)) {
-            boolean ok=true;
+            boolean ok = true;
             List lista = clienteDao.getAllClientes();
-            for(int i=0;i < lista.size();i++){
-                Cliente temporal= (Cliente)lista.get(i);
-                if(temporal.getIdentificacion().equals(identificacion)){
-                    ok=false;
+            for (int i = 0; i < lista.size(); i++) {
+                Cliente temporal = (Cliente) lista.get(i);
+                if (temporal.getIdentificacion().equals(identificacion)) {
+                    ok = false;
                 }
             }
-            if(ok){
+            if (ok) {
                 clienteDao.addCliente(cliente);
                 cliente = new Cliente();
+            } else {
+                mensaje = "Ya existe un cliente con la IDENTIFICACIÓN ingresada, por favor verificarla.";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
             }
-            else{
-                //Falta enviar mensaje que el id ya existe 
-            }
-            
+
         } else if ("Editar".equalsIgnoreCase(accion)) {
             clienteDao.editCliente(cliente);
         } else if ("Eliminar".equalsIgnoreCase(accion)) {
             clienteDao.deleteCliente(identificacion);
         } else if ("Buscar".equalsIgnoreCase(accion)) {
             cliente = clienteDao.getCliente(identificacion);
-        } else {
-            //mostrar todo
         }
-        
 
         request.setAttribute("cliente", cliente);
         request.setAttribute("AllClientes", clienteDao.getAllClientes());
 
-        // CAMBIAR PARAMETRO POR jsp CORRESPONDIENTE
         request.getRequestDispatcher("Cliente.jsp").forward(request, response);
 
     }

@@ -1,3 +1,10 @@
+<%-- 
+    Document   : Mensaje
+    Created on : 6/05/2015, 05:02:30 PM
+    Author     : jorgel.diaz
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,12 +18,12 @@
 
 
 
-
     </head>
     <body background="resources/concesionario-autos.jpg">
         <div class="titulo" align="center" >
             Concesionario CRUD
         </div>
+
         <div align="center" style= "margin-left: 15%  ;margin-right:  15%  ;margin-top: 5%  ;">
             <div class="contenedor1">
                 <div style="margin-top: 50%;">
@@ -32,22 +39,20 @@
                     <form action="./VentaServlet" method="POST">
                         <input type="submit" name="accion" value="Venta"/>
                     </form>
-                    <br>
-                </div>
-
+                </div> 
             </div>
-            <div class="contenedor2alterno" >
-                <h1>Laboratorio #2
-                    <br>CRUD</h1>
+            <div class="contenedor2alterno">
+                <center>
+                    <h2><%=request.getAttribute("Message")%> </h2>
+                </center>
 
-                <h3>Integrantes</h3>
-                <h4>Esteban Cataño<br>
-                    Jorge Díaz<br>
-                    Mateo Noreña<br>
-                    John Tapias
-                </h4>
-
-            </div>
+                <tr>                        
+                    <td colspan="2">
+                        <br>
+                <center> <a class="btn-primary" HREF="index.html"><h2><b> INICIO </b></h2></a></center>
+                </td>
+                </tr>
+            </div> 
         </div>
     </body>
 </html>

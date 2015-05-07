@@ -9,9 +9,6 @@ import com.udea.dao.VehiculoDaoLocal;
 import com.udea.model.Vehiculo;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,11 +27,12 @@ import javax.servlet.http.Part;
  * @author usuario
  */
 @MultipartConfig(maxFileSize = 16177215)
-@WebServlet(name = "VehiculoServlet",urlPatterns = {"/VehiculoServlet"})
+@WebServlet(name = "VehiculoServlet", urlPatterns = {"/VehiculoServlet"})
 public class VehiculoServlet extends HttpServlet {
+
     @EJB
     private VehiculoDaoLocal vehiculoDao;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,92 +46,125 @@ public class VehiculoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
         String texto;
-        String matricula;
+        String matricula = "";
         String accion;
         String color = "";
         String cantidad = "";
         String modelo = "";
-        String precio = "";        
+        String precio = "";
+        String mensaje = "";
         Part filePart;
         InputStream inputStream = null;
         byte[] foto = null;
-        
+
         //Capturamos los valores de los campos en la vista
-        
         accion = request.getParameter("accion");
-        
-        matricula = request.getParameter("matricula");
 
-        texto = request.getParameter("modelo");
-        if (Validacion.validarNumero(texto)) {
-            modelo = texto;
+        if (accion.equals("Agregar") || accion.equals("Editar")) {
+
+            texto = request.getParameter("matricula");
+            if (texto != null && !texto.equals("")) {
+                matricula = texto;
+            } else {
+                mensaje = "El campo MATRICULA presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+            }
+
+            texto = request.getParameter("modelo");
+            if (texto != null && !texto.equals("") && Validacion.validarNumero(texto)) {
+                modelo = texto;
+            } else {
+                mensaje = "El campo MODELO presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+            }
+
+            texto = request.getParameter("color");
+            if (texto != null && !texto.equals("") && Validacion.validarString(texto)) {
+                color = texto;
+            } else {
+                mensaje = "El campo COLOR presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+            }
+
+            texto = request.getParameter("cantidad");
+            if (texto != null && !texto.equals("") && Validacion.validarNumero(texto)) {
+                cantidad = texto;
+            } else {
+                mensaje = "El campo CANTIDAD presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+            }
+
+            texto = request.getParameter("precio");
+            if (texto != null && !texto.equals("") && Validacion.validarPrecio(texto)) {
+                precio = texto;
+            } else {
+                mensaje = "El campo PRECIO presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+            }
+
+            filePart = request.getPart("foto");
+
+            if (filePart != null) {
+
+                // Información para Debug
+                System.out.println(filePart.getName());
+                System.out.println(filePart.getSize());
+                System.out.println(filePart.getContentType());
+
+                // Obtener el InputStream del Archivo Subido
+                inputStream = filePart.getInputStream();
+                foto = new byte[(int) filePart.getSize()];
+                inputStream.read(foto);
+                inputStream.close();
+
+            }
         }
-
-        texto = request.getParameter("color");
-        if (Validacion.validarString(texto)) {
-            color = texto;            
+        if (accion.equals("Eliminar") || accion.equals("Buscar")) {
+            texto = request.getParameter("matricula");
+            if (texto != null && !texto.equals("")) {
+                matricula = texto;
+            } else {
+                mensaje = "El campo MATRICULA presenta errores, por favor verificarlo";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
+            }
         }
-        
-        texto = request.getParameter("cantidad");
-        if (Validacion.validarNumero(texto)) {
-            cantidad = texto;
-        }
-        
-        texto = request.getParameter("precio");
-        if (Validacion.validarPrecio(texto)) {
-           // precio = Double.parseDouble(texto);
-            precio = texto;
-        }
-       
-        
-        filePart = request.getPart("foto");
+        Vehiculo vehiculo = new Vehiculo(matricula, modelo, color, cantidad, precio, foto);
 
-        if (filePart != null) {
-
-            // Información para Debug
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
-
-            // Obtener el InputStream del Archivo Subido
-            inputStream = filePart.getInputStream();
-            foto = new byte[(int) filePart.getSize()];
-            inputStream.read(foto);
-            inputStream.close();
-        
-        }  
-            Vehiculo vehiculo = new Vehiculo(matricula, modelo, color, cantidad, precio, foto);
-           
-        
         if ("Agregar".equalsIgnoreCase(accion)) {
-            boolean ok=true;
+            boolean ok = true;
             List l = vehiculoDao.getAllVehiculos();
-            for(int i=0;i<l.size();i++){
-                Vehiculo v=(Vehiculo)l.get(i);
-                if(v.getMatricula().equals(matricula)){
-                    ok=false;
+            for (int i = 0; i < l.size(); i++) {
+                Vehiculo v = (Vehiculo) l.get(i);
+                if (v.getMatricula().equals(matricula)) {
+                    ok = false;
                 }
             }
-            if(ok){
+            if (ok) {
                 vehiculoDao.addVehiculo(vehiculo);
                 vehiculo = new Vehiculo();
+            } else {
+                mensaje = "Ya existe un vehículo con la MATRICULA ingresada, por favor verificarla.";
+                request.setAttribute("Message", mensaje);
+                request.getRequestDispatcher("Mensaje.jsp").forward(request, response);
             }
-            else{
-                //Mensaje de alerta----intento fallido de duplicación de primary key
-            }
-            
-        }else if ("Editar".equalsIgnoreCase(accion)) {
+
+        } else if ("Editar".equalsIgnoreCase(accion)) {
             vehiculoDao.editVehiculo(vehiculo);
-        }else if ("Eliminar".equalsIgnoreCase(accion)) {
+        } else if ("Eliminar".equalsIgnoreCase(accion)) {
             vehiculoDao.deleteVehiculo(matricula);
-        }else if ("Buscar".equalsIgnoreCase(accion)) {
+        } else if ("Buscar".equalsIgnoreCase(accion)) {
             vehiculo = vehiculoDao.getVehiculo(matricula);
         }
-        
+
         request.setAttribute("vehiculo", vehiculo);
         request.setAttribute("AllVehiculos", vehiculoDao.getAllVehiculos());
-        
-        // CAMBIAR PARAMETRO POR jsp CORRESPONDIENTE
+
         request.getRequestDispatcher("Vehiculo.jsp").forward(request, response);
     }
 

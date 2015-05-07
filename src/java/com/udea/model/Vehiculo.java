@@ -5,8 +5,6 @@
  */
 package com.udea.model;
 
-import java.io.InputStream;
-import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

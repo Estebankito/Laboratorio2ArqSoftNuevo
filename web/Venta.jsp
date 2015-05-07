@@ -20,7 +20,7 @@
 
 
     </head>
-     <body background="resources/concesionario-autos.jpg">
+    <body background="resources/concesionario-autos.jpg">
         <div class="titulo" align="center" >
             Concesionario CRUD
         </div>
@@ -31,11 +31,11 @@
                     <form action="./ClienteServlet" method="POST">
                         <input type="submit" name="accion" value="Cliente"/>
                     </form>
-                    <!--<a href="Cliente.jsp">Cliente</a><br><br>--><br>
-                    <form action="./VehiculoServlet" method="POST">
+                    <br>
+                    <form action="./VehiculoServlet" method="POST" enctype="multipart/form-data">
                         <input type="submit" name="accion" value="Vehiculo"/>
                     </form>
-                    <!--<a href="Vehiculo.jsp">Vehículo</a><br><br>--><br>
+                    <br>
                     <form action="./VentaServlet" method="POST">
                         <input type="submit" name="accion" value="Venta"/>
                     </form>
@@ -45,27 +45,27 @@
             <div class="contenedor2alterno">
                 <h1>Venta</h1>
                 <form action="./VentaServlet" method="POST">
-                     <table>
-                         <!--Pendiente añadir imagen redimensionada-->
+                    <table>
+
                         <tr>
-                            <th><h2>#Factura</h2></th>
-                            <th><input type="text" name="nroFactura" value="${venta.nroFactura}"/> </th>
+                            <th><h2>N° Factura</h2></th>
+                        <th><input type="text" name="nroFactura" value="${venta.nroFactura}"/> </th>
                         </tr>
                         <tr>
-                            <th><h2>#Cliente</h2></th>
-                            <th> <input type="text" name="idCliente" value="${venta.cliente}"/></th>
+                            <th><h2>ID. Cliente</h2></th>
+                        <th> <input type="text" name="idCliente" value="${venta.cliente}"/></th>
                         </tr>
                         <tr>
-                            <th><h2>#Vehiculo</h2></th>
-                            <th><input type="text" name="idVehiculo" value="${venta.vehiculo}"/> </th>
+                            <th><h2>Matrícula Vehiculo</h2></th>
+                        <th><input type="text" name="idVehiculo" value="${venta.vehiculo}"/> </th>
                         </tr>
                         <tr>
                             <th><h2>Cantidad</h2></th>
-                            <th> <input type="text" name="cantidad" value="${venta.cantidad}"/></th>
+                        <th> <input type="text" name="cantidad" value="${venta.cantidad}"/></th>
                         </tr>
                         <tr>
                             <th><h2>Precio Total</h2></th>
-                            <th><input type="text" name="precioTotal" value="${venta.precioTotal}"/> </th>
+                        <th><input type="text" name="precioTotal" value="${venta.precioTotal}"/> </th>
                         </tr>
                         <th><br></th>
                         <tr>
@@ -76,7 +76,7 @@
                                 <input type="submit" name="accion" value="Buscar"/>
                             </td>
                         </tr>
-                     </table>
+                    </table>
                 </form>
                 <br>
                 <br>
@@ -86,7 +86,7 @@
                     <th>Vehiculo</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
-                
+
                     <c:forEach items="${AllVentas}" var="vent">
                         <tr>
                             <td>${vent.nroFactura}</td>
